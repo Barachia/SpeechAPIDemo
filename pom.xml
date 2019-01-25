@@ -62,7 +62,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>SpeechAPIDemo.ExampleApp</mainClass>
+                            <mainClass>SpeechAPIDemo.MiddlewareWrapper</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -95,6 +95,21 @@
             <groupId>org.concentus</groupId>
             <artifactId>Concentus</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>hmi</groupId>
+            <artifactId>HmiMiddlewareAbstractionLayer</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.15.8</version>
         </dependency>
     </dependencies>
 
