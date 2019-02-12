@@ -97,9 +97,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>hmi</groupId>
-            <artifactId>HmiMiddlewareAbstractionLayer</artifactId>
-            <version>0.1.1</version>
+            <groupId>nl.utwente.hmi</groupId>
+            <artifactId>middleware</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib.local/HmiMiddlewareAbstractionLayer-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
