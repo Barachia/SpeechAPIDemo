@@ -1,0 +1,1 @@
+java -jar ./target/SpeechAPIDemo-1.0.jar this.is.my.server:xxxx

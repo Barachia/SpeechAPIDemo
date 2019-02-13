@@ -1,6 +1,6 @@
 # SpeechAPIDemo
 ## Notes
-This fork of the SpeechAPIDemo is made for sending ASR results over middleware.
+This fork of the SpeechAPIDemo is made for sending ASR results over ActiveMQ middleware.
 
 To run this version of the demo compared to the original, you require the additional packages:
 - jackson-databind 2.9.7
@@ -11,14 +11,14 @@ Make sure you have an AMQ server running (http://activemq.apache.org/). Properti
 ---
 JAVA application demonstrating the use of the net-speech-api for kaldigstserver.
 
-Large parts of the code are based on https://github.com/Kaljurand/net-speech-api, and this code 
+Large parts of the code are based on https://github.com/Kaljurand/net-speech-api, and this code
 can be used as a starting point for a client using kaldigstserver (https://github.com/alumae/kaldi-gstreamer-server).
 
-You can compile this program using:
+If you want to compile and package yourself, you need to install the HMIMiddlewareAbstractionLayer first, if this is not yet in your local Maven repository. You can do this with the 'installHMIMiddleware.sh/bat'. If this is installed, you can compile this program using:
 
 `$ mvn package`
 
-Run the application using:
+Run the application afterwards using (or use the run.bat/sh):
 
 `$ java -jar target/SpeechAPIDemo-1.0.jar server:port [userid] [contentid]`
 
@@ -28,5 +28,5 @@ The main screen contains 2 buttons. Use 'Select File' to transcribe speech from 
 
 The results part has 2 tabs: txt and ctm. The former shows the standard textual output, whereas the latter gives you results in .ctm format. Right-clicking on the results pane allows you to save the output.
 
---- 
+---
 If you work at the University of Twente, you can contact me for server/host for the SpeechAPIDemo (j.b.vanwaterschoot@utwente.nl)
