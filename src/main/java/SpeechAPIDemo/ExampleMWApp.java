@@ -2,8 +2,8 @@ package SpeechAPIDemo;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.utwente.hmi.middleware.Middleware;
 import nl.utwente.hmi.middleware.MiddlewareListener;
+import nl.utwente.hmi.middleware.MiddlewareWrapper;
 import nl.utwente.hmi.middleware.loader.GenericMiddlewareLoader;
 import org.concentus.OpusApplication;
 import org.concentus.OpusEncoder;
@@ -33,7 +33,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 
-public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
+public class ExampleMWApp extends JFrame implements MiddlewareListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
     private static JScrollPane resultscrollPane;
     private static JScrollPane ctmresultscrollPane;
 
-    private static Middleware middleware;
+    private static MiddlewareWrapper mwModule;
     private static RecognitionEventAccumulator eventAccumulator;
 
     boolean stopCapture = false;
@@ -160,7 +160,7 @@ public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
                 if(!event.getResult().isFinal()){
                     ObjectMapper mapper = new ObjectMapper();
                     try {
-                        middleware.sendData(mapper.readTree("{ \"type\" : \"inc\" , \"text\" : \" " + result + "\"}"));
+                        mwModule.sendData(mapper.readTree("{ \"type\" : \"inc\" , \"text\" : \" " + result + "\"}"));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -195,7 +195,7 @@ public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
                 }
                 ObjectMapper mapper = new ObjectMapper();
                 try {
-                    middleware.sendData(mapper.readTree("{ \"type\" : \"final\" , \"text\" : \" " + event.getResult().getHypotheses().get(0).getTranscript() + "\"}"));
+                    mwModule.sendData(mapper.readTree("{ \"type\" : \"final\" , \"text\" : \" " + event.getResult().getHypotheses().get(0).getTranscript() + "\"}"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -273,7 +273,7 @@ public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
             if (args.length>2) {
                 ContentID=args[2];
             }
-            new MiddlewareWrapper();
+            new ExampleMWApp();
         } else {
             System.out.println("Please specify server and port to use (this.is.my.server:0000)");
         }
@@ -314,13 +314,16 @@ public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
     }
 
     private void initMW(){
-
         Properties ps = new Properties();
-        InputStream mwProps = MiddlewareWrapper.class.getClassLoader().getResourceAsStream("middleware.properties");
+        InputStream mwProps = ExampleMWApp.class.getClassLoader().getResourceAsStream("middleware.properties");
         try {
             ps.load(mwProps);
-            GenericMiddlewareLoader gml = new GenericMiddlewareLoader(ps.getProperty("middleware"), ps);
-            middleware = gml.load();
+            mwModule = new MiddlewareWrapper(ps) {
+                @Override
+                public void processData(JsonNode jsonNode) {
+                    System.out.println("Received feedback on speech" + jsonNode.toString());
+                }
+            };
         } catch (IOException e) {
             System.out.println("No middleware loaded");
             e.printStackTrace();
@@ -329,7 +332,7 @@ public class MiddlewareWrapper extends JFrame implements MiddlewareListener {
 
     }
 
-    public MiddlewareWrapper() {
+    public ExampleMWApp() {
 
         initMW();
 

@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: SpeechAPIDemo.MiddlewareWrapper
+Main-Class: SpeechAPIDemo.ExampleMWApp
