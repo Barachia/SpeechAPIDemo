@@ -1,1 +1,1 @@
-java -jar SpeechAPIDemo-1.0/SpeechAPIDemo-1.0.jar nlspraak.ewi.utwente.nl:8890
+java -jar target/SpeechAPIDemo-1.0.jar xx.xx.xx.xx:xxxx
