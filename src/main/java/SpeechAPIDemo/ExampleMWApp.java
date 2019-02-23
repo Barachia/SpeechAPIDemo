@@ -33,7 +33,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 
-public class ExampleMWApp extends JFrame implements MiddlewareListener {
+public class ExampleMWApp extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -76,17 +76,6 @@ public class ExampleMWApp extends JFrame implements MiddlewareListener {
     private static String ContentID = "unknown";
 
     private static JsonNode input;
-
-    @Override
-    public void receiveData(JsonNode jn) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            input = mapper.readTree(jn.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     static class RecognitionEventAccumulator implements RecognitionEventListener, WorkerCountInterface {
 
