@@ -1,1 +1,0 @@
-mvn install:install-file -Dfile=./lib.local/HmiMiddlewareAbstractionLayer.jar -DgroupId=nl.utwente.hmi -DartifactId=middleware -Dversion=0.1 -Dpackaging=jar
