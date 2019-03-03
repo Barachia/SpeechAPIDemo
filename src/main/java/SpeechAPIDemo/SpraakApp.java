@@ -296,7 +296,7 @@ public class SpraakApp {
             	logger.info("Transcript hypothesis: {}",incText);
             	if(sendMW){
                     try {
-                        speechMW.processData(mapper.readTree("{ \"type\" : \"inc\" , \"text\" : \" " + incText + "\"}"));
+                        speechMW.sendData(mapper.readTree("{ \"type\" : \"inc\" , \"text\" : \" " + incText + "\"}"));
                     } catch (IOException e) {
                         logger.error("Could not parse JsonNode for incremental text: {}",incText);
                         e.printStackTrace();
@@ -307,7 +307,7 @@ public class SpraakApp {
             		logger.info("Final hypothesis: {} \n",finalText);
                     if(sendMW){
                         try {
-                            speechMW.processData(mapper.readTree("{ \"type\" : \"inc\" , \"text\" : \" " + incText + "\"}"));
+                            speechMW.sendData(mapper.readTree("{ \"type\" : \"final\" , \"text\" : \" " + incText + "\"}"));
                         } catch (IOException e) {
                             logger.error("Could not parse JsonNode for final text: {}",finalText);
                             e.printStackTrace();
