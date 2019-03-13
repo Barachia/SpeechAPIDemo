@@ -3,19 +3,30 @@ package SpeechAPIDemo;
 import com.fasterxml.jackson.databind.JsonNode;
 import hmi.flipper2.middleware.FlipperMiddleware;
 import nl.utwente.hmi.middleware.MiddlewareWrapper;
-import nl.utwente.hmi.middleware.MiddlewareWrapperFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Class for testing the speech
  */
-public class FlipperSpraak{
+public class FlipperSpraak extends FlipperMiddleware {
 
 
 	private static Logger logger = LoggerFactory.getLogger(FlipperSpraak.class.getName());
 	private SpraakApp app;
 	private String socket;
+
+	public FlipperSpraak(String mw, String socket){
+		super(mw);
+		this.socket = socket;
+	}
+
+	public boolean init(){
+		super.init();
+		app = new SpraakApp(socket,this.wrapper);
+		app.startCapturingAudio();
+		return true;
+	}
 
 	public static void main(String[] args){
 
@@ -41,9 +52,8 @@ public class FlipperSpraak{
 				System.exit(0);
 			}
 		}
-		MiddlewareWrapper wrapper = MiddlewareWrapperFactory.createMiddlewareWrapper(mw);
-		SpraakApp app = new SpraakApp(websocket,wrapper);
-		app.startCapturingAudio();
+		FlipperSpraak fs = new FlipperSpraak(mw,websocket);
+		fs.init();
 	}
 
 }
