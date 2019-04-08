@@ -14,6 +14,8 @@ import javax.sound.sampled.TargetDataLine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import nl.utwente.hmi.middleware.MiddlewareWrapper;
 import org.concentus.OpusApplication;
 import org.concentus.OpusEncoder;
@@ -256,6 +258,8 @@ public class SpraakApp {
         private boolean closed = false;
         private static String finalText = "";
         private static String incText = "";
+        private static float confidence = 0;
+        private static List<String> alternatives;
 
         public void notifyWorkerCount(int count) {
             logger.error("****** N_WORKERS = {}",count);
@@ -293,25 +297,26 @@ public class SpraakApp {
             logger.debug("Got event: {}");
             if (event.getResult() != null) {
                 incText = event.getResult().getHypotheses().get(0).getTranscript();
+                confidence = event.getResult().getHypotheses().get(0).getConfidence();
+
             	logger.info("Transcript hypothesis: {}",incText);
             	if(sendMW){
-                    try {
-                        speechMW.sendData(mapper.readTree("{ \"type\" : \"inc\" , \"text\" : \" " + incText + "\"}"));
-                    } catch (IOException e) {
-                        logger.error("Could not parse JsonNode for incremental text: {}",incText);
-                        e.printStackTrace();
-                    }
-            	}
+                    ObjectNode spraak = mapper.createObjectNode();
+                    spraak.put("type","inc");
+                    spraak.put("text",incText);
+                    spraak.put("confidence",confidence);
+                    speechMW.sendData(spraak);
+                }
                 if (event.getResult().isFinal()) {
             	    finalText = event.getResult().getHypotheses().get(0).getTranscript();
             		logger.info("Final hypothesis: {} \n",finalText);
                     if(sendMW){
-                        try {
-                            speechMW.sendData(mapper.readTree("{ \"type\" : \"final\" , \"text\" : \" " + incText + "\"}"));
-                        } catch (IOException e) {
-                            logger.error("Could not parse JsonNode for final text: {}",finalText);
-                            e.printStackTrace();
-                        }
+                        ObjectNode spraak = mapper.createObjectNode();
+                        spraak.put("type","final");
+                        spraak.put("text",finalText);
+                        spraak.put("confidence",confidence);
+                        speechMW.sendData(spraak);
+
                     }
                 }
             }
