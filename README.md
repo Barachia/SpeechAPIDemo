@@ -3,7 +3,7 @@
 This fork of the SpeechAPIDemo is made for sending ASR results over ActiveMQ middleware.
 
 To run this version of the demo compared to the original, you require the additional packages:
-- jackson-databind 2.9.7
+- jackson-databind 2.9.8
 - activemq-client 5.15.8
 
 Make sure you have an AMQ server running (http://activemq.apache.org/). Properties for AMQ changes can be made in the middleware.properties file.
@@ -13,8 +13,6 @@ JAVA application demonstrating the use of the net-speech-api for kaldigstserver.
 
 Large parts of the code are based on https://github.com/Kaljurand/net-speech-api, and this code
 can be used as a starting point for a client using kaldigstserver (https://github.com/alumae/kaldi-gstreamer-server).
-
-If you want to compile and package yourself, you need to install the HMIMiddlewareAbstractionLayer first, if this is not yet in your local Maven repository. You can do this with the 'installHMIMiddleware.sh/bat'. If this is installed, you can compile this program using:
 
 `$ mvn package`
 
