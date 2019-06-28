@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import nl.utwente.hmi.middleware.MiddlewareWrapper;
+import nl.utwente.hmi.middleware.Middleware;
 import org.concentus.OpusApplication;
 import org.concentus.OpusEncoder;
 import org.concentus.OpusSignal;
@@ -47,9 +47,9 @@ public class SpraakApp {
     static boolean sendPong = false;
     private static Logger logger = LoggerFactory.getLogger(SpraakApp.class.getName());
 
-    private static MiddlewareWrapper speechMW;
     private static boolean sendMW;
     private static ObjectMapper mapper;
+    private static Middleware mw;
 
     private static BlockingQueue<JsonNode> speech;
 
@@ -59,9 +59,9 @@ public class SpraakApp {
         sendMW = false;
     }
 
-    public SpraakApp(String URL, MiddlewareWrapper wrapper){
+    public SpraakApp(String URL, Middleware speechMW){
         DEFAULT_WS_URL = URL;
-        speechMW = wrapper;
+        mw = speechMW;
         speech = new LinkedBlockingQueue();
         sendMW = true;
         mapper = new ObjectMapper();
@@ -259,7 +259,6 @@ public class SpraakApp {
         private static String finalText = "";
         private static String incText = "";
         private static float confidence = 0;
-        private static List<String> alternatives;
 
         public void notifyWorkerCount(int count) {
             logger.error("****** N_WORKERS = {}",count);
@@ -305,7 +304,7 @@ public class SpraakApp {
                     spraak.put("type","inc");
                     spraak.put("text",incText);
                     spraak.put("confidence",confidence);
-                    speechMW.sendData(spraak);
+                    mw.sendData(spraak);
                 }
                 if (event.getResult().isFinal()) {
             	    finalText = event.getResult().getHypotheses().get(0).getTranscript();
@@ -315,7 +314,7 @@ public class SpraakApp {
                         spraak.put("type","final");
                         spraak.put("text",finalText);
                         spraak.put("confidence",confidence);
-                        speechMW.sendData(spraak);
+                        mw.sendData(spraak);
 
                     }
                 }

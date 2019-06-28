@@ -37,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>SpeechAPIDemo.FlipperSpraak</mainClass>
+                            <mainClass>SpeechAPIDemo.ExampleApp</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -54,8 +54,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <classpathPrefix>lib.local/</classpathPrefix>
-                            <mainClass>SpeechAPIDemo.FlipperSpraak</mainClass>
+                            <mainClass>SpeechAPIDemo.ExampleApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -74,7 +73,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>SpeechAPIDemo.FlipperSpraak</mainClass>
+                    <mainClass>SpeechAPIDemo.ExampleApp</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -94,20 +93,6 @@
                             <version>0.1</version>
                             <packaging>jar</packaging>
                             <file>${basedir}/lib.local/HmiMiddlewareAbstractionLayer-0.1.jar</file>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>flipper-middleware</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <configuration>
-                            <groupId>hmi.flipper2.0</groupId>
-                            <artifactId>flipper-middleware</artifactId>
-                            <version>1.0</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/lib.local/flipper-middleware-1.0.jar</file>
                         </configuration>
                     </execution>
                 </executions>
