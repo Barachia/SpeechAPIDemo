@@ -6,7 +6,7 @@ To run this version of the demo compared to the original, you require the additi
 - jackson-databind 2.9.8
 - activemq-client 5.15.8
 
-Make sure you have an AMQ server running (http://activemq.apache.org/). Properties for AMQ changes can be made in the middleware.properties file.
+Make sure you have an AMQ server running (http://activemq.apache.org/). Properties for AMQ changes can be made in the middleware.json file. Though you can also use other Middleware options.
 
 ---
 JAVA application demonstrating the use of the net-speech-api for kaldigstserver.
@@ -14,11 +14,18 @@ JAVA application demonstrating the use of the net-speech-api for kaldigstserver.
 Large parts of the code are based on https://github.com/Kaljurand/net-speech-api, and this code
 can be used as a starting point for a client using kaldigstserver (https://github.com/alumae/kaldi-gstreamer-server).
 
+Run it with Maven:
+
+`$ mvn exec:java "-Dexec.args=server:port"`
+
+or make it available as a jar for running it without Maven:
+
 `$ mvn package`
 
-Run the application afterwards using (or use the run.bat/sh):
+Run the application afterwards using:
 
 `$ java -jar target/SpeechAPIDemo-1.0.jar server:port [userid] [contentid]`
+
 
 The server is assumed to be running on ws://server:port/client/ws/speech, with status info on ws://server:port/client/ws/status.
 
