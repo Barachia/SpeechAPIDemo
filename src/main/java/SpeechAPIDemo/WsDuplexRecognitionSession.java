@@ -7,6 +7,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -18,6 +20,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
+
+	private static Logger logger = LoggerFactory.getLogger(SpraakApp.class.getName());
 	
 	class MyWsClient extends WebSocketClient {
 
@@ -132,7 +136,7 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 	public static RecognitionEvent parseRecognitionEventJson(String json) {
 		Object obj = JSONValue.parse(json);
 
-		System.err.println("Got raw event: " + obj);
+		logger.debug("Got raw event: " + obj);
 
 		if (obj == null) {
 			return null;

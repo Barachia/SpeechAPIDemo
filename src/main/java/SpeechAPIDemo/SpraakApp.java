@@ -67,8 +67,6 @@ public class SpraakApp {
         mapper = new ObjectMapper();
     }
 
-
-
     /**
      * Method for gracefully stopping audio capture
      */
@@ -176,7 +174,7 @@ public class SpraakApp {
            
             //set compression to 128kb/s. Bitrate, e.g. 128kb/s, must be multiplied * 1000
             bitrate=128000;
-            logger.error("Bitrate: {} kbit/second",bitrate);
+            logger.info("Bitrate: {} kbit/second",bitrate);
 
             try {
                 if (bitrate==0) {
@@ -298,7 +296,7 @@ public class SpraakApp {
                 incText = event.getResult().getHypotheses().get(0).getTranscript();
                 confidence = event.getResult().getHypotheses().get(0).getConfidence();
 
-            	logger.info("Transcript hypothesis: {}",incText);
+            	logger.debug("Transcript hypothesis: {}",incText);
             	if(sendMW){
                     ObjectNode spraak = mapper.createObjectNode();
                     spraak.put("type","inc");
@@ -308,7 +306,7 @@ public class SpraakApp {
                 }
                 if (event.getResult().isFinal()) {
             	    finalText = event.getResult().getHypotheses().get(0).getTranscript();
-            		logger.info("Final hypothesis: {} \n",finalText);
+            		logger.debug("Final hypothesis: {} \n",finalText);
                     if(sendMW){
                         ObjectNode spraak = mapper.createObjectNode();
                         spraak.put("type","final");

@@ -3,13 +3,11 @@ package SpeechAPIDemo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.utwente.hmi.middleware.Middleware;
-import nl.utwente.hmi.middleware.MiddlewareListener;
 import nl.utwente.hmi.middleware.loader.GenericMiddlewareLoader;
 import nl.utwente.hmi.middleware.worker.Worker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -68,7 +66,6 @@ public class MiddlewareSpraak implements Worker {
 		}
 		MiddlewareSpraak fs = new MiddlewareSpraak(mw,websocket);
 		fs.run();
-		//fs.init();
 	}
 
 
@@ -107,5 +104,9 @@ public class MiddlewareSpraak implements Worker {
 	public void run() {
 		app = new SpraakApp(socket,middleware);
 		app.startCapturingAudio();
+	}
+
+	public void stopSpraak(){
+		this.app.stopCapturingAudio();
 	}
 }
